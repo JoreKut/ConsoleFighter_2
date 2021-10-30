@@ -1,5 +1,6 @@
 package com.company.GamePlay;
 
+import com.company.Colors;
 import com.company.Creatures.Enemy;
 import com.company.Creatures.Hero;
 
@@ -88,7 +89,13 @@ public class Area implements Runnable{
         // Вывод
         for(char[] line : map){
             for(char sym : line){
-                System.out.print(sym);
+                if(sym == '@')
+                    System.out.print(Colors.GREEN_BACKGROUND + Colors.BLACK_BOLD);
+                else if(sym != '|' && sym != '-' && sym != ' ')
+                    System.out.print(Colors.RED_BACKGROUND + Colors.BLACK_BOLD );
+
+                System.out.print(sym + Colors.RESET);
+
             }
             System.out.println();
         }

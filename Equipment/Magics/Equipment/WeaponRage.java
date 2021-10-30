@@ -24,4 +24,11 @@ public class WeaponRage extends Magic{
             info();
         }
     }
+
+    @Override
+    public String toString() {
+        return "WeaponRage{" +
+                "upgradePart=" + upgradePart +
+                '}';
+    }
 }

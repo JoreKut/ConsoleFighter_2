@@ -2,8 +2,17 @@ package com.company.Creatures;
 
 public class Enemy extends Creature {
 
-    public Enemy(String name, double healthPoint, double damagePoint) {
-        super(name, healthPoint, damagePoint);
+    public int experiencePointForVictory;
+    public int coinsForVictory;
 
+    public Enemy(String name, double healthPoint, int level) {
+        this.name = name;
+        this.healthPoint = healthPoint;
+        this.level = level;
+        this.damagePoint = level * 10;
+        experiencePointForVictory = 100;
+        coinsForVictory = level * 20;
     }
+
+
 }

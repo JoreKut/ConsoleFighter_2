@@ -10,11 +10,21 @@ public class Weapon extends Equipment {
     public int reloadDelay;
     public Attackable superpower;  // Срабатывает перед выстрелом
 
-    public Weapon(String name, double damagePoint, int accessLevel, int reloadDelay){
+    public Weapon(String name, double damagePoint, int price, int accessLevel, int level){
+        this.name = name;
+        this.damagePoint = damagePoint;
+        this.level = level;
+        this.reloadDelay = 1000;
+        this.price = price;
+        this.accessLevel = accessLevel;
+    }
+    public Weapon(String name, double damagePoint, int price, int accessLevel){
         this.name = name;
         this.damagePoint = damagePoint;
         this.accessLevel = accessLevel;
-        this.reloadDelay = reloadDelay;
+        this.level = 1;
+        this.reloadDelay = 1000;
+        this.price = price;
     }
 
     public void setMagic(Attackable superpower){

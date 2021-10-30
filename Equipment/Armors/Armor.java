@@ -5,13 +5,24 @@ import com.company.Equipment.Equipment;
 public class Armor extends Equipment implements Protectable {
 
     public ArmorType type;
-    private boolean _active = false;
 
-    public Armor(double healthPoint, ArmorType type){
+    public Armor(String name, double healthPoint, ArmorType type, int price ,int accessLevel){
+        this.level = 1;
+        this.name = name;
         this.healthPoint = healthPoint;
         this.type = type;
+        this.accessLevel = accessLevel;
+        this.price = price;
     }
 
+    public Armor(String name, double healthPoint, ArmorType type){
+
+        this.name = name;
+        this.healthPoint = healthPoint;
+        this.type = type;
+        this.price = level * 200;
+        this.accessLevel = 1;
+    }
 
     public boolean isBroken(){
         return healthPoint <= 0;
@@ -29,5 +40,18 @@ public class Armor extends Equipment implements Protectable {
         System.out.println("Отражено 0 HP Броня сломана");
 
         return damage;
+    }
+
+    @Override
+    public String toString() {
+        return "Armor{" +
+                "name='" + name + '\'' +
+                ", level=" + level +
+                ", type=" + type +
+                ", price=" + price +
+                ", accessLevel=" + accessLevel +
+                ", level=" + level +
+                ", healthPoint=" + healthPoint +
+                '}';
     }
 }

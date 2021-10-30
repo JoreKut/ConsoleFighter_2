@@ -14,12 +14,15 @@ public class Creature extends GameObject {
     public double healthPoint;
     public double damagePoint;
     public Point location;
+    public int coins;
 
     public boolean isAlive = true;
 
     public ArrayList<Equipment> inventory = new ArrayList<>();
 
     public char mapSigh = nextSym++;
+
+    public Creature(){}
 
     public Creature(String name, double healthPoint, double damagePoint){
         this.name = name;

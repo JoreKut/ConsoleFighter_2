@@ -25,4 +25,11 @@ public class PoisonSpell extends Magic {
             info();
         }
     }
+
+    @Override
+    public String toString() {
+        return "PoisonSpell{" +
+                "damage=" + damage +
+                '}';
+    }
 }

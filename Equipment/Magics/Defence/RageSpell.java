@@ -7,8 +7,8 @@ public class RageSpell extends Magic {
 
     private final double _damageValue;
 
-    public RageSpell(double _healingValue){
-        this._damageValue = _healingValue;
+    public RageSpell(double _damageValue){
+        this._damageValue = _damageValue;
     }
 
     private void info(){
@@ -25,5 +25,10 @@ public class RageSpell extends Magic {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "RageSpell{" +
+                "_damageValue=" + _damageValue +
+                '}';
+    }
 }

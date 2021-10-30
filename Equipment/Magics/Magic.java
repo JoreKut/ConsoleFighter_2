@@ -24,4 +24,5 @@ public class Magic extends Equipment {
     }
 
     public void use(CreatureController creature){}
+
 }

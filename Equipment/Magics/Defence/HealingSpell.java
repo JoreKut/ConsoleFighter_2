@@ -24,4 +24,11 @@ public class HealingSpell extends Magic {
             info();
         }
     }
+
+    @Override
+    public String toString() {
+        return "HealingSpell{" +
+                "_healingValue=" + _healingValue +
+                '}';
+    }
 }

@@ -1,19 +1,21 @@
 package com.company.GamePlay;
 
 import com.company.Creatures.Enemy;
+import com.company.Equipment.Equipment;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
 public class EnemyController extends CreatureController implements Runnable{
 
-    //public Enemy creature;
-    //public HeroController characterTarget;
-
-
     public EnemyController(Enemy myEnemy) {
         this.creature = myEnemy;
+    }
+
+    public ArrayList<Equipment> throwLoot(){
+        return creature.inventory;
     }
 
     /*

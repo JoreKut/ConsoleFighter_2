@@ -1,5 +1,6 @@
 package com.company.GamePlay;
 
+import com.company.Creatures.Enemy;
 import com.company.Creatures.Hero;
 import com.company.Equipment.Armors.Armor;
 import com.company.Equipment.Equipment;
@@ -13,8 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 public class HeroController extends CreatureController implements Runnable{
 
-    // protected Hero creature;
-    // protected EnemyController creatureTarget;
     Hero<? extends Magic,? extends Magic,? extends Magic> buffHero;
 
     public HeroController(Hero<?,?,?> myHero) {
@@ -37,10 +36,12 @@ public class HeroController extends CreatureController implements Runnable{
     public void checkTargetAlive(){
         if(!creatureTarget.isAlive()) {
             isFight = false;
-            //System.out.print("HEALING SPELL: " + creature.healthPoint);
-            //new HealingSpell(100).use(this);
-            //System.out.print("  ___  " + creature.healthPoint);
-            getLoot(creatureTarget.throwLoot());
+            getLoot(((EnemyController)creatureTarget).throwLoot());
+
+            ((Hero<?,?,?>)creature).experience += ((Enemy)creatureTarget.creature).experiencePointForVictory* creature.level;
+            creature.coins += ((Enemy) creatureTarget.creature).coinsForVictory;
+            ((Hero<?, ?, ?>) creature).tryLevelUp();
+
             System.out.println("*********************************************");
             System.out.println(creature.name + ": I win !");
             System.out.println(creatureTarget.creature.name + ": I lose...");
@@ -68,10 +69,12 @@ public class HeroController extends CreatureController implements Runnable{
         for(Equipment lootItem : enemyLoot){
 
             if(lootItem instanceof Armor){
+                System.out.println("После боя получена новая вещь(броня) - " + lootItem.name);
                 creature.addArmor((Armor) lootItem);
             }
 
             if(lootItem instanceof Weapon){
+                System.out.println("После боя получена новая вещь(Оружие) - " + lootItem.name);
                 creature.addWeapon((Weapon) lootItem);
             }
 

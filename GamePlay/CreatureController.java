@@ -15,13 +15,6 @@ public class CreatureController {
     protected Creature creature;
     protected CreatureController creatureTarget;
 
-    Armor helmet;
-    Armor chest;
-    Armor legs;
-    Armor boots;
-
-    Weapon weapon;
-
     public double baseHealthPoint;
 
     public char[][] map;
@@ -98,10 +91,6 @@ public class CreatureController {
         this.map = map;
     }
 
-    public ArrayList<Equipment> throwLoot(){
-        return creature.inventory;
-    }
-
     public void addHealth(double adding){
         creature.healthPoint += adding;
     }
@@ -109,12 +98,16 @@ public class CreatureController {
     public void exit(){
         exit = true;
     }
+
     public void move() throws InterruptedException {
 
         int direction = new Random().nextInt(4);
         int stepNumber = new Random().nextInt(5);
 
         for(int i = 0; i < stepNumber; i++){
+
+            if(creature.location.y == 0 || creature.location.x == 0 || creature.location.y == map.length ||  creature.location.x == map[0].length )
+                continue;
 
             if(direction == 0){
                 // UP

@@ -24,6 +24,13 @@ public class Hero<A extends Magic, B extends Magic, C extends Magic> extends Cre
         experience = 0;
     }
 
+    public void tryLevelUp(){
+        if(experience > level*400){
+            experience = 0;
+            level++;
+        }
+    }
+
     public void setAttackMagic(A attackMagic){
         this.attackMagic = attackMagic;
         inventory.add(attackMagic);
@@ -35,11 +42,6 @@ public class Hero<A extends Magic, B extends Magic, C extends Magic> extends Cre
     public void setEquipmentMagic(C equipmentMagic){
         this.equipmentMagic = equipmentMagic;
         inventory.add(equipmentMagic);
-    }
-
-
-    public void recovery(){
-        this.healthPoint = baseHealthPoints;
     }
 
 }
