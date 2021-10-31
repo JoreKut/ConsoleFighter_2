@@ -3,15 +3,12 @@ package com.company.Creatures;
 import com.company.Equipment.Equipment;
 import com.company.Equipment.Magics.Attack.Attackable;
 import com.company.Equipment.Magics.Defence.Defenceble;
+import com.company.Equipment.Magics.Equipment.Equipmentable;
 import com.company.Equipment.Magics.Magic;
 
 import java.util.ArrayList;
 
-public class Hero<A extends Magic, B extends Magic, C extends Magic> extends Creature {
-
-    public A attackMagic;
-    public B defenceMagic;
-    public C equipmentMagic;
+public class Hero extends Creature {
 
     public double baseHealthPoints;
     public int experience;
@@ -22,6 +19,8 @@ public class Hero<A extends Magic, B extends Magic, C extends Magic> extends Cre
         this.baseHealthPoints = healthPoint;
         mapSigh = '@';
         experience = 0;
+        //coins = 1000000;
+        //level = 555;
     }
 
     public void tryLevelUp(){
@@ -31,17 +30,22 @@ public class Hero<A extends Magic, B extends Magic, C extends Magic> extends Cre
         }
     }
 
-    public void setAttackMagic(A attackMagic){
+    public void setAttackMagic(Attackable attackMagic){
         this.attackMagic = attackMagic;
-        inventory.add(attackMagic);
+        inventory.add((Magic)attackMagic);
     }
-    public void setDefenceMagic(B defenceMagic){
+    public void setDefenceMagic(Defenceble defenceMagic){
         this.defenceMagic = defenceMagic;
-        inventory.add(defenceMagic);
+        inventory.add((Magic)defenceMagic);
     }
-    public void setEquipmentMagic(C equipmentMagic){
+    public void setEquipmentMagic(Equipmentable equipmentMagic){
         this.equipmentMagic = equipmentMagic;
-        inventory.add(equipmentMagic);
+        inventory.add((Magic)equipmentMagic);
     }
 
+    public void recovery(){
+        this.healthPoint = baseHealthPoints;
+        isAlive = true;
+        currentDamagePoint = damagePoint;
+    }
 }

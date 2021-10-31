@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Magic extends Equipment {
 
-    int chance;
+    public int chance;
     protected boolean hasUsed = false;
 
     public Magic(int chance){

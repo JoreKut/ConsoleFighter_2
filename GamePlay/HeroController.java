@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 public class HeroController extends CreatureController implements Runnable{
 
-    Hero<? extends Magic,? extends Magic,? extends Magic> buffHero;
+    Hero buffHero;
 
-    public HeroController(Hero<?,?,?> myHero) {
+    public HeroController(Hero myHero) {
         buffHero = myHero;
         this.creature = myHero;
         this.baseHealthPoint = myHero.healthPoint;
@@ -38,9 +38,9 @@ public class HeroController extends CreatureController implements Runnable{
             isFight = false;
             getLoot(((EnemyController)creatureTarget).throwLoot());
 
-            ((Hero<?,?,?>)creature).experience += ((Enemy)creatureTarget.creature).experiencePointForVictory* creature.level;
+            ((Hero)creature).experience += ((Enemy)creatureTarget.creature).experiencePointForVictory* creature.level;
             creature.coins += ((Enemy) creatureTarget.creature).coinsForVictory;
-            ((Hero<?, ?, ?>) creature).tryLevelUp();
+            ((Hero) creature).tryLevelUp();
 
             System.out.println("*********************************************");
             System.out.println(creature.name + ": I win !");
@@ -90,16 +90,23 @@ public class HeroController extends CreatureController implements Runnable{
     }
 
     private void tryToUseMagic(){
+
         int chance = new Random().nextInt(3);
-        if(chance == 0){
+
+        if(chance == 0 && creature.attackMagic != null){
             System.out.println("ATTACKABLE SPELL...");
-            ((Hero<?,?,?>)creature).attackMagic.use(creatureTarget);
-        }else if(chance == 1){
+            creature.attackMagic.useAttack(creatureTarget);
+        }else if(chance == 1 && creature.defenceMagic != null){
             System.out.println("DEFENCEBLE SPELL...");
-            ((Hero<?,?,?>)creature).defenceMagic.use(this);
-        }else {
+            creature.defenceMagic.useDefence(this);
+        }else if(creature.equipmentMagic != null) {
             System.out.println("EQUIPMENT SPELL...");
-            ((Hero<?, ?, ?>) creature).equipmentMagic.use(this);
+            // Применяем к каждой активной броне
+            for(Equipment item : creature.inventory){
+                if(item instanceof Armor && item.isActive()){
+                    creature.equipmentMagic.useEquipmentUpgrade(item);
+                }
+            }
         }
     }
 

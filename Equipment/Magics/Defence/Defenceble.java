@@ -1,9 +1,10 @@
 package com.company.Equipment.Magics.Defence;
 
+import com.company.Equipment.Magics.Magic;
 import com.company.GamePlay.CreatureController;
 
-public interface Defenceble {
+public interface Defenceble{
 
-    public void use(CreatureController creature);
+    public void useDefence(CreatureController creature);
 
 }

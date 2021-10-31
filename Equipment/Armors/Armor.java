@@ -21,6 +21,7 @@ public class Armor extends Equipment implements Protectable {
         this.healthPoint = healthPoint;
         this.type = type;
         this.price = level * 200;
+        this.level = 1;
         this.accessLevel = 1;
     }
 

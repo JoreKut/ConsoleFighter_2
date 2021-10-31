@@ -1,12 +1,12 @@
 package com.company.GamePlay;
 
+import com.company.Colors;
 import com.company.Creatures.Creature;
 import com.company.Equipment.Armors.Armor;
 import com.company.Equipment.Armors.ArmorType;
 import com.company.Equipment.Equipment;
 import com.company.Equipment.Weapons.Weapon;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -30,7 +30,7 @@ public class CreatureController {
         }
 
 
-        creatureTarget.takeDamage(creature.damagePoint, ArmorType.getRandomType());
+        creatureTarget.takeDamage(creature.currentDamagePoint, ArmorType.getRandomType());
 
         checkTargetAlive();
 
@@ -48,7 +48,7 @@ public class CreatureController {
         }
     }
 
-    public void setOpponent(CreatureController opponent) throws InterruptedException {
+    public void setOpponent(CreatureController opponent) {
         this.creatureTarget = opponent;
         isFight = true;
 
@@ -57,12 +57,18 @@ public class CreatureController {
         return creature.isAlive;
     }
 
+    public void setNewActiveArmor(){
+
+        Armor bestOption = null;
+
+    }
 
     public void takeDamage(double damagePoint) {
 
         creature.healthPoint -= damagePoint;
         creature.checkAlive();
     }
+
 
     public void takeDamage(double damagePoint, ArmorType armorArea){
 
@@ -71,11 +77,12 @@ public class CreatureController {
         for(Equipment item : creature.inventory){
             if(item instanceof Armor && ((Armor) item).type == armorArea){
                 // Снижение дамага (или нет)
-                System.out.print(creature.name + " за");
                 damagePoint = ((Armor) item).takeDamage(damagePoint);
 
                 if(((Armor) item).isBroken()){
-                    System.out.println(((Armor) item).type.name() + item.name + " is broken (");
+                    System.out.println(Colors.RED_BACKGROUND + Colors.BLACK_BOLD + ((Armor) item).type.name() + item.name + " is broken (");
+                    creature.inventory.remove(item);
+                    setNewActiveArmor();
                 }
 
                 break;
@@ -93,6 +100,10 @@ public class CreatureController {
 
     public void addHealth(double adding){
         creature.healthPoint += adding;
+    }
+
+    public void addDamagePoint(double damagePoints){
+        creature.currentDamagePoint += damagePoints;
     }
 
     public void exit(){

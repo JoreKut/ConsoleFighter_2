@@ -36,7 +36,7 @@ public class Main {
 
     static Scanner scanner = new Scanner(System.in);
 
-    static Hero<PoisonSpell, HealingSpell, WeaponRage> hero = new Hero<PoisonSpell, HealingSpell, WeaponRage>("Hero", 20, 20);
+    static Hero hero = new Hero("Hero", 100, 20);
 
     public static void loadWeaponShop(){
         weaponList.add(new Weapon("AK-47", 47,  600,2 ));
@@ -71,15 +71,23 @@ public class Main {
 
     }
 
+    public static void loadMagicShop(){
+        magicList.add(new PoisonSpell(20,250));
+        magicList.add(new HealingSpell(70, 190));
+        magicList.add(new RageSpell(50, 200));
+        magicList.add(new ArmorRage(0.2f, 300));
+        magicList.add(new WeaponRage(0.2f,300));
+    }
+
     public static void loadHero(){
         Armor gucci_helmet = new Armor("Default helmet ", 50, ArmorType.HELMET);
         Armor H_and_M_Chest = new Armor("Default Chest ", 150, ArmorType.CHEST);
         Armor adidas_legs = new Armor("Default Legs ", 70, ArmorType.LEGS);
         Armor nike = new Armor("Default Boots ",60, ArmorType.BOOTS);
 
-        PoisonSpell poisonSpell = new PoisonSpell(20);
-        HealingSpell healingSpell = new HealingSpell(50);
-        WeaponRage weaponRage = new WeaponRage(0.2f); // увеличение на 20%
+        Attackable poisonSpell = new PoisonSpell(20);
+        Defenceble healingSpell = new HealingSpell(50);
+        Equipmentable weaponRage = new WeaponRage(0.2f); // увеличение на 20%
 
 
         Weapon w1 = new Weapon("Gun", 10, 1, 1000);
@@ -129,7 +137,7 @@ public class Main {
             case 1 -> WeaponShop();
             case 2 -> ArmorShop();
             case 3 -> MagicShop();
-            case 4 -> mainMenu();
+            default -> mainMenu();
         }
 
     }
@@ -226,28 +234,115 @@ public class Main {
         System.out.println("\t\tChoose the magic to buy");
         int i = 1;
         for(Magic magic : magicList){
-            System.out.println("\t\t" + i++ + ". " + magic.name + "  coast: " + magic.price + "coins");
+            System.out.println("\t\t"  + (hero.level < magic.accessLevel ? Colors.BLACK_BACKGROUND + Colors.WHITE_BOLD + "LOCKED " : Colors.WHITE_BACKGROUND + Colors.BLACK_BOLD +  "ACCESSED ") + i++ + ". " + magic + "  coast: " + magic.price + "coins" + Colors.RESET);
         }
         System.out.println("\t\t" + i + ". exit");
 
         System.out.print("\t\t>> ");
         int choice = scanner.nextInt();
-        Magic boughtMagic;
-        if(choice < magicList.size())
-            boughtMagic = magicList.get(choice);
-        // Equipment -> add new Item
+        while (choice < i){
+            Magic selectedMagic;
+            if (choice < magicList.size() + 1 && choice > 0) {
+
+                selectedMagic = magicList.get(choice - 1);
+                if(selectedMagic.accessLevel <= hero.level){
+                    if(selectedMagic.price <= hero.coins){
+
+                        if(selectedMagic instanceof Attackable){
+                            if(hero.attackMagic == null){
+                                //Если нет магии на этой позиции
+                                hero.coins -= selectedMagic.price;
+                                hero.setAttackMagic((Attackable) selectedMagic);
+                                System.out.println("\t\t"  + "Поздравляем! Теперь у вас есть новая магия! Используйте её  умом :)");
+                            }
+                            else {
+                                //Если есть магия на этой позиции
+                                System.out.println("\t\t"  + "У вас на этой позици есть следущая магия: " + hero.attackMagic);
+                                System.out.println("\t\t"  + "Заменить ? y/n");
+                                System.out.print("\t\t>> ");
+                                String ans = scanner.next();
+                                if(ans.equals("y")){
+                                    hero.coins -= selectedMagic.price;
+                                    hero.setAttackMagic((Attackable) selectedMagic);
+                                    System.out.println("\t\t"  + "Поздравляем! Теперь у вас есть новая магия! Используйте её  умом :)");
+                                }
+
+                            }
+                        }else if(selectedMagic instanceof Defenceble){
+                            if(hero.defenceMagic == null){
+                                //Если нет магии на этой позиции
+                                hero.coins -= selectedMagic.price;
+                                hero.setDefenceMagic((Defenceble) selectedMagic);
+                                System.out.println("\t\t"  + "Поздравляем! Теперь у вас есть новая магия! Используйте её  умом :)");
+                            }
+                            else {
+                                //Если есть магия на этой позиции
+                                System.out.println("\t\t"  + "У вас на этой позици есть следущая магия: " + hero.defenceMagic);
+                                System.out.println("\t\t"  + "Заменить ? y/n");
+                                System.out.print("\t\t>> ");
+                                String ans = scanner.next();
+                                if(ans.equals("y")){
+                                    hero.coins -= selectedMagic.price;
+                                    hero.setDefenceMagic((Defenceble) selectedMagic);
+                                    System.out.println("\t\t"  + "Поздравляем! Теперь у вас есть новая магия! Используйте её  умом :)");
+                                }
+
+                            }
+                        }else if(selectedMagic instanceof Equipmentable){
+                            if(hero.equipmentMagic == null){
+                                //Если нет магии на этой позиции
+                                hero.coins -= selectedMagic.price;
+                                hero.setEquipmentMagic((Equipmentable) selectedMagic);
+                                System.out.println("\t\t"  + "Поздравляем! Теперь у вас есть новая магия! Используйте её  умом :)");
+                            }
+                            else {
+                                //Если есть магия на этой позиции
+                                System.out.println("\t\t"  + "У вас на этой позици есть следущая магия: " + hero.equipmentMagic);
+                                System.out.println("\t\t"  + "Заменить ? y/n");
+                                System.out.print("\t\t>> ");
+                                String ans = scanner.next();
+                                if(ans.equals("y")){
+                                    hero.coins -= selectedMagic.price;
+                                    hero.setEquipmentMagic((Equipmentable) selectedMagic);
+                                    System.out.println("\t\t"  + "Поздравляем! Теперь у вас есть новая магия! Используйте её  умом :)");
+                                }
+
+                            }
+                        }
+
+
+                    }
+                    else
+                        System.out.println("\t\t"  + "Вам нужно подкопить побольше монет");
+                }
+                else
+                    System.out.println("\t\t"  + "Ваш уровень не позволяет вам получить эту магию :(");
+
+            }
+            else
+                System.out.println("Bruh...");
+            // Equipment -> add new Item
+
+            System.out.print("\t\t>> ");
+            choice = scanner.nextInt();
+
+        }
+
+
+
         Shop();
     }
 
     public static void Arena() throws InterruptedException {
+        hero.recovery();
         System.out.println("\t_______ARENA_______ ");
         String[] battleMap = {
                 // '|' or '-'
-                "------------------------------------",
-                "|                                  |",
-                "|                                  |",
-                "|                                  |",
-                "------------------------------------",
+                "----------------",
+                "|              |",
+                "|              |",
+                "|              |",
+                "----------------",
         };
 
         int enemyCounter = 5;
@@ -268,6 +363,7 @@ public class Main {
 
             enemyCounter++;
             enemyLevel++;
+            System.out.println("HP: " + hero.healthPoint + " | Damage: " + hero.currentDamagePoint);
             System.out.println("Next level: " + enemyLevel);
             System.out.println("Continue? y/n");
 
@@ -283,7 +379,7 @@ public class Main {
 
     public static void Crusade() throws InterruptedException {
         System.out.println("\t_______CRUSADE_______ ");
-
+        hero.recovery();
         String[] battleMap = {
                 // '|' or '-'
                 "---------------",
@@ -336,6 +432,7 @@ public class Main {
         // write your code here
         loadWeaponShop();
         loadArmorShop();
+        loadMagicShop();
         loadHero();
         mainMenu();
 
