@@ -1,26 +1,25 @@
 package com.company.Creatures;
 
-import com.company.Equipment.Equipment;
 import com.company.Equipment.Magics.Attack.Attackable;
 import com.company.Equipment.Magics.Defence.Defenceble;
 import com.company.Equipment.Magics.Equipment.Equipmentable;
 import com.company.Equipment.Magics.Magic;
-
-import java.util.ArrayList;
+import com.company.MapCharacters;
 
 public class Hero extends Creature {
 
     public double baseHealthPoints;
     public int experience;
-    public ArrayList<Equipment> backpack = new ArrayList<>();
 
-    public Hero(String name, double healthPoint, double damagePoint) {
+    public Hero(String name, double healthPoint, double damagePoint, boolean DEBUG_MODE) {
         super(name, healthPoint, damagePoint);
         this.baseHealthPoints = healthPoint;
-        mapSigh = '@';
+        mapSigh = MapCharacters.HERO.sym;
         experience = 0;
-        //coins = 1000000;
-        //level = 555;
+        if(DEBUG_MODE){
+            coins = 1000000;
+            level = 555;
+        }
     }
 
     public void tryLevelUp(){

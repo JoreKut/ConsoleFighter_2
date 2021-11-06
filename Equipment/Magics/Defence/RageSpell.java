@@ -21,6 +21,7 @@ public class RageSpell extends Magic implements Defenceble{
 
     private void info(){
         System.out.println(Colors.CYAN_BACKGROUND + Colors.BLACK_BOLD + "Rage spell has been used. ");
+        System.out.println(Colors.RESET);
     }
 
     @Override

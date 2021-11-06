@@ -22,6 +22,7 @@ public class PoisonSpell extends Magic implements Attackable{
 
     private void info(){
         System.out.println(Colors.PURPLE_BACKGROUND + Colors.BLACK_BOLD + "Poison spell has been used. ");
+        System.out.println(Colors.RESET);
     }
 
     @Override

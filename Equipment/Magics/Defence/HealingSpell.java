@@ -22,6 +22,7 @@ public class HealingSpell extends Magic implements Defenceble{
 
     private void info(){
         System.out.println(Colors.CYAN_BACKGROUND + Colors.BLACK_BOLD + "Healing spell has been used. ");
+        System.out.println(Colors.RESET);
     }
     @Override
     public void useDefence(CreatureController creature) {

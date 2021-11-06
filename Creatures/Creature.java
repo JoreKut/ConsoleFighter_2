@@ -5,7 +5,6 @@ import com.company.Equipment.Equipment;
 import com.company.Equipment.Magics.Attack.Attackable;
 import com.company.Equipment.Magics.Defence.Defenceble;
 import com.company.Equipment.Magics.Equipment.Equipmentable;
-import com.company.Equipment.Magics.Magic;
 import com.company.Equipment.Weapons.Weapon;
 
 import java.awt.*;
@@ -18,7 +17,7 @@ public class Creature extends GameObject {
     public Defenceble defenceMagic;
     public Equipmentable equipmentMagic;
 
-    private static char nextSym = 65;
+    //private static char nextSym = 65;
 
     public double healthPoint;
     public double damagePoint;
@@ -30,7 +29,7 @@ public class Creature extends GameObject {
 
     public ArrayList<Equipment> inventory = new ArrayList<>();
 
-    public char mapSigh = nextSym++;
+    public char mapSigh;
 
     public Creature(){}
 
@@ -82,6 +81,10 @@ public class Creature extends GameObject {
         if(accept || count == 0)
             newWeapon.setActive();
         inventory.add(newWeapon);
+    }
+
+    public void buyEquipment(Equipment item){
+        coins -= item.price;
     }
 
 }

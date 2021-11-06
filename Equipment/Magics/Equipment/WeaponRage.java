@@ -20,6 +20,7 @@ public class WeaponRage extends Magic implements Equipmentable{
     }
     private void info(){
         System.out.println(Colors.YELLOW_BACKGROUND + Colors.BLACK_BOLD + "Weapon Rage spell has been used. ");
+        System.out.println(Colors.RESET);
     }
 
     public void useEquipmentUpgrade(Equipment item) {

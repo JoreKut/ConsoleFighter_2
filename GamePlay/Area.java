@@ -1,30 +1,34 @@
 package com.company.GamePlay;
 
-import com.company.Colors;
 import com.company.Creatures.Enemy;
 import com.company.Creatures.Hero;
+import com.company.MapCharacters;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Area implements Runnable{
+public class Area implements KeyListener {
 
     protected char[][] map;
 
     protected HeroController mainHero;
     protected ArrayList<EnemyController> enemyControllerList = new ArrayList<>();
 
-    private ArrayList<Thread> threads = new ArrayList<>();
+    private final ExecutorService  ex = Executors.newCachedThreadPool();
 
-    // * - Wall
-    // @ - Player
-    // A-Z - Enemies
+    private final GraphicBattleMap graphicMap = new GraphicBattleMap(800,800);
 
     public Area(String[] map){
 
+        graphicMap.addKeyListener(this);
+        graphicMap.setRequestFocusEnabled(true);
+        graphicMap.loadMap(map);
         char[][] charMap = new char[map.length][];
 
         // Формируем массив символов из массива строк
@@ -41,15 +45,14 @@ public class Area implements Runnable{
         enemyController.loadMap(map);
         enemyControllerList.add(enemyController);
 
-        Thread enemyThread = new Thread(enemyController);
-        enemyThread.start();
-        threads.add(enemyThread);
+        ex.submit(enemyController);
     }
     public void setHero(Hero mainHero){
         mainHero.location = getFreeLocation();
         this.mainHero = new HeroController(mainHero);
         this.mainHero.loadMap(map);
-        new Thread(this.mainHero).start();
+
+        ex.submit(this.mainHero);
     }
 
     private void clearDead(){
@@ -62,9 +65,9 @@ public class Area implements Runnable{
         do {
             x = 1 + rand.nextInt(map[0].length-1);
             y = 1 + rand.nextInt(map.length-1);
-        }while (map[y][x] != ' ');
+        }while (map[y][x] != MapCharacters.SPACE.sym);
 
-        map[y][x] = 'x';
+        map[y][x] = MapCharacters.LOCK_AREA.sym;
         return new Point(x,y);
     }
 
@@ -73,8 +76,8 @@ public class Area implements Runnable{
         // Очистка
         for(int i = 0; i < map.length; i++){
             for(int j = 0; j < map[0].length; j++){
-                if(map[i][j] != '-' && map[i][j] != '|' && map[i][j] != '#')
-                    map[i][j] = ' ';
+                if(map[i][j] != MapCharacters.WALL.sym)
+                    map[i][j] = MapCharacters.SPACE.sym;
             }
         }
 
@@ -86,23 +89,12 @@ public class Area implements Runnable{
         if(mainHero.isAlive())
             map[mainHero.creature.location.y][mainHero.creature.location.x] = mainHero.creature.mapSigh;
 
-        // Вывод
-        for(char[] line : map){
-            for(char sym : line){
-                if(sym == '@')
-                    System.out.print(Colors.GREEN_BACKGROUND + Colors.BLACK_BOLD);
-                else if(sym != '|' && sym != '-' && sym != ' ')
-                    System.out.print(Colors.RED_BACKGROUND + Colors.BLACK_BOLD );
+        graphicMap.loadMap(map);
 
-                System.out.print(sym + Colors.RESET);
-
-            }
-            System.out.println();
-        }
     }
 
-    @Override
-    public void run() {
+    public void start(){
+        graphicMap.startShowing();
         System.out.println("I am AREA-Thread !");
         mainHero.recovery();
         // Map OUTPUT
@@ -115,7 +107,6 @@ public class Area implements Runnable{
                 printMap();
                 if(enemyControllerList.size() == 0){
                     mainHero.exit();
-                    // try ro use magic
                     break;
                 }
                 TimeUnit.MILLISECONDS.sleep(100);
@@ -124,6 +115,7 @@ public class Area implements Runnable{
             }
         }
 
+        // Выключаем мобов
         for(EnemyController enemy : enemyControllerList) {
             enemy.exit();
             try {
@@ -134,6 +126,56 @@ public class Area implements Runnable{
             System.out.println(enemy.creature.name + " leaving the battle arena.");
         }
 
+        graphicMap.breakShowing();
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        ex.shutdownNow();
+    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(!mainHero.isFight){
+            int x = mainHero.creature.location.x;
+            int y = mainHero.creature.location.y;
+
+
+
+            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                if(x+1 != map[0].length && map[y][x+1] != MapCharacters.WALL.sym)
+                    mainHero.creature.location.x++;
+            }
+            if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                if(x-1 != 0 && map[y][x-1] != MapCharacters.WALL.sym)
+                    mainHero.creature.location.x--;
+            }
+
+            if(e.getKeyCode() == KeyEvent.VK_DOWN){
+                if(y+1 != map.length && map[y+1][x] != MapCharacters.WALL.sym)
+                    mainHero.creature.location.y++;
+            }
+            if(e.getKeyCode() == KeyEvent.VK_UP){
+                if(y+1 != 0 && map[y-1][x] != MapCharacters.WALL.sym)
+                    mainHero.creature.location.y--;
+            }
+        }
+
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
 
     }
 }

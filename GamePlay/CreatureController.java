@@ -9,7 +9,6 @@ import com.company.Equipment.Weapons.Weapon;
 
 import java.util.Random;
 
-
 public class CreatureController {
 
     protected Creature creature;
@@ -57,11 +56,6 @@ public class CreatureController {
         return creature.isAlive;
     }
 
-    public void setNewActiveArmor(){
-
-        Armor bestOption = null;
-
-    }
 
     public void takeDamage(double damagePoint) {
 
@@ -81,8 +75,11 @@ public class CreatureController {
 
                 if(((Armor) item).isBroken()){
                     System.out.println(Colors.RED_BACKGROUND + Colors.BLACK_BOLD + ((Armor) item).type.name() + item.name + " is broken (");
+                    System.out.println(Colors.RESET);
                     creature.inventory.remove(item);
-                    setNewActiveArmor();
+
+                    // TO-DO: добавить смену на броню из инвенторя
+
                 }
 
                 break;
@@ -113,12 +110,9 @@ public class CreatureController {
     public void move() throws InterruptedException {
 
         int direction = new Random().nextInt(4);
-        int stepNumber = new Random().nextInt(5);
 
-        for(int i = 0; i < stepNumber; i++){
+        if(!(creature.location.y == 0 || creature.location.x == 0 || creature.location.y == map.length ||  creature.location.x == map[0].length) ){
 
-            if(creature.location.y == 0 || creature.location.x == 0 || creature.location.y == map.length ||  creature.location.x == map[0].length )
-                continue;
 
             if(direction == 0){
                 // UP
@@ -141,6 +135,8 @@ public class CreatureController {
                 if(map[creature.location.y][creature.location.x] != ' ')
                     creature.location.x++;
             }
+
+
         }
 
     }

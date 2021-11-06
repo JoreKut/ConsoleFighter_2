@@ -21,11 +21,12 @@ public class ArmorRage extends Magic implements Equipmentable{
 
     private void info(){
         System.out.println(Colors.YELLOW_BACKGROUND + Colors.BLACK_BOLD + "Armor Rage spell has been used. ");
+        System.out.println(Colors.RESET);
     }
 
     public void useEquipmentUpgrade(Equipment item) {
         if(item instanceof Armor && !hasUsed && tryChance()){
-            ((Armor) item).healthPoint *= (1+upgradePart);
+            item.healthPoint *= (1+upgradePart);
             hasUsed = true;
             info();
         }

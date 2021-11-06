@@ -5,7 +5,6 @@ import com.company.Creatures.Hero;
 import com.company.Equipment.Armors.Armor;
 import com.company.Equipment.Equipment;
 import com.company.Equipment.Magics.Defence.HealingSpell;
-import com.company.Equipment.Magics.Magic;
 import com.company.Equipment.Weapons.Weapon;
 
 import java.util.ArrayList;
@@ -117,18 +116,15 @@ public class HeroController extends CreatureController implements Runnable{
                 if(isFight && creatureTarget.isAlive()){
                     attackEnemy();
                     tryToUseMagic();
-                    TimeUnit.MILLISECONDS.sleep(1000);
                 }
                 else{
-                    // MOVEMENT
-                    move();
-                    TimeUnit.MILLISECONDS.sleep(100);
+                    isFight = false;
                 }
+                TimeUnit.MILLISECONDS.sleep(400);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
 
     }
 }
