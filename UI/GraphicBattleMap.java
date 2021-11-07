@@ -1,5 +1,7 @@
 package com.company.UI;
 
+import com.company.MapCharacters;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -42,7 +44,7 @@ public class GraphicBattleMap extends JPanel implements ActionListener{
     public void paint(Graphics g) {
         if(isBattle){
             super.paint(g);
-            int cell_size = WINDOW_WIDTH / (size+2);
+            int cell_size = WINDOW_WIDTH / size;
 
             for(int i = 0; i < map.length; i++){
                 for(int j = 0; j < map[0].length; j++){
@@ -50,15 +52,15 @@ public class GraphicBattleMap extends JPanel implements ActionListener{
                     g.setColor(Color.DARK_GRAY);
                     g.fillRect(j*cell_size, i*cell_size, cell_size, cell_size);
 
-                    if(map[i][j] == '*') {
+                    if(map[i][j] == MapCharacters.WALL.sym) {
                         g.setColor(Color.BLACK);
                         g.fillRect(j*cell_size, i*cell_size, cell_size, cell_size);
                     }
-                    else if(map[i][j] == '@') {
+                    else if(map[i][j] == MapCharacters.HERO.sym) {
                         g.setColor(Color.GREEN);
                         g.fillOval(j*cell_size, i*cell_size, cell_size, cell_size);
                     }
-                    else if (map[i][j] != ' ') {
+                    else if (map[i][j] != MapCharacters.SPACE.sym) {
                         g.setColor(Color.RED);
                         g.fillOval(j*cell_size, i*cell_size, cell_size, cell_size);
                     }
