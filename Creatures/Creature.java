@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class Creature extends GameObject {
 
+    // Magic
     public Attackable attackMagic;
     public Defenceble defenceMagic;
     public Equipmentable equipmentMagic;

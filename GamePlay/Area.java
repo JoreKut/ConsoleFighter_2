@@ -97,7 +97,7 @@ public class Area implements KeyListener {
     public void start(){
         graphicMap.startShowing();
         mainHero.recovery();
-        // Map OUTPUT
+
         while(mainHero.isAlive()){
             try {
                 mainHero.checkAround(enemyControllerList);
