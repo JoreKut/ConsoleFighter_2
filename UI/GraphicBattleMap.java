@@ -1,9 +1,10 @@
-package com.company.GamePlay;
+package com.company.UI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class GraphicBattleMap extends JPanel implements ActionListener{
 
@@ -57,10 +58,7 @@ public class GraphicBattleMap extends JPanel implements ActionListener{
                         g.setColor(Color.GREEN);
                         g.fillOval(j*cell_size, i*cell_size, cell_size, cell_size);
                     }
-                    else if (map[i][j] == ' ') {
-
-                    }
-                    else {
+                    else if (map[i][j] != ' ') {
                         g.setColor(Color.RED);
                         g.fillOval(j*cell_size, i*cell_size, cell_size, cell_size);
                     }

@@ -20,7 +20,7 @@ public class Magic extends Equipment {
 
     protected boolean tryChance(){
         int rand = new Random().nextInt(100);
-        return chance < rand;
+        return chance > rand;
     }
 
     public void use(CreatureController creature){}

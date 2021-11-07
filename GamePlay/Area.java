@@ -3,6 +3,7 @@ package com.company.GamePlay;
 import com.company.Creatures.Enemy;
 import com.company.Creatures.Hero;
 import com.company.MapCharacters;
+import com.company.UI.GraphicBattleMap;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -95,7 +96,6 @@ public class Area implements KeyListener {
 
     public void start(){
         graphicMap.startShowing();
-        System.out.println("I am AREA-Thread !");
         mainHero.recovery();
         // Map OUTPUT
         while(mainHero.isAlive()){
@@ -138,12 +138,6 @@ public class Area implements KeyListener {
         ex.shutdownNow();
     }
 
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
     @Override
     public void keyPressed(KeyEvent e) {
         if(!mainHero.isFight){
@@ -171,6 +165,12 @@ public class Area implements KeyListener {
             }
         }
 
+
+    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e) {
 
     }
 
