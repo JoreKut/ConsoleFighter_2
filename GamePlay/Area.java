@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Area implements KeyListener {
 
+
     protected char[][] map;
 
     protected HeroController mainHero;
@@ -23,7 +24,7 @@ public class Area implements KeyListener {
 
     private final ExecutorService  ex = Executors.newCachedThreadPool();
 
-    private final GraphicBattleMap graphicMap = new GraphicBattleMap(800,800);
+    private final GraphicBattleMap graphicMap = new GraphicBattleMap(600,600);
 
     public Area(String[] map){
 

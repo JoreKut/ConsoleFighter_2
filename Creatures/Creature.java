@@ -17,8 +17,6 @@ public class Creature extends GameObject {
     public Defenceble defenceMagic;
     public Equipmentable equipmentMagic;
 
-    //private static char nextSym = 65;
-
     public double healthPoint;
     public double damagePoint;
     public double currentDamagePoint;

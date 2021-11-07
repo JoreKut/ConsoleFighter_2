@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-
-
 public class Main {
 
     static ArrayList<Weapon> weaponList = new ArrayList<>();
@@ -31,15 +29,17 @@ public class Main {
 
     static Scanner scanner = new Scanner(System.in);
 
-    static final boolean DEBUG_MODE = true;
+    static final boolean DEBUG_MODE = false;
 
     //******************************************************************
 
     public static void loadWeaponShop(){
+
         weaponList.add(new Weapon("AK-47", 47,  600,2 ));
         weaponList.add(new Weapon("Desert Eagle", 30,  1000, 3));
         weaponList.add(new Weapon("USP-S", 20, 900,3));
         weaponList.add(new Weapon("Rocket-M", 60, 4000, 5));
+
     }
 
     public static void loadArmorShop(){
@@ -400,7 +400,6 @@ public class Main {
         System.out.println("\t_______CRUSADE_______ ");
         hero.recovery();
         String[] battleMap = {
-                // '|' or '-'
                 "******************************",
                 "*                            *",
                 "*                            *",
@@ -468,6 +467,7 @@ public class Main {
          loadArmorShop();
          loadMagicShop();
          loadHero();
+
          mainMenu();
 
     }
