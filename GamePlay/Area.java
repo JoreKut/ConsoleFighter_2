@@ -23,7 +23,7 @@ public class Area implements KeyListener {
 
     private final ExecutorService  ex = Executors.newCachedThreadPool();
 
-    private final GraphicBattleMap graphicMap = new GraphicBattleMap(600,600);
+    private final GraphicBattleMap graphicMap = new GraphicBattleMap(1000,800);
 
     public Area(String[] map){
 
