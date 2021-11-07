@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Area implements KeyListener {
 
-
     protected char[][] map;
 
     protected HeroController mainHero;

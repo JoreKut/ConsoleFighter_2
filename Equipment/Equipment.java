@@ -3,6 +3,7 @@ package com.company.Equipment;
 import com.company.Creatures.GameObject;
 
 public class Equipment extends GameObject {
+
     public double price;
     public int accessLevel = 1;
     public int level;
